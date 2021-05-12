@@ -125,3 +125,5 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 alias config='/usr/bin/git --git-dir=/Users/tanmaygairola/.cfg/ --work-tree=/Users/tanmaygairola'
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

@@ -37,6 +37,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Comments plugin
 Plug 'tpope/vim-commentary'
 
+"Scala plugins
+Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+
 "nvim-telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -98,7 +101,8 @@ colorscheme gruvbox
 
 highlight Normal guibg=NONE ctermbg=NONE
 
-
+let g:go_fmt_command = "goimports" 
+let g:go_fmt_autosave = 1 
 let g:prettier#autoformat = 0
 let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
 let g:gruvbox_invert_selection='0'
