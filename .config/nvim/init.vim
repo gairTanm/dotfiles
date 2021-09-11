@@ -37,8 +37,14 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Comments plugin
 Plug 'tpope/vim-commentary'
 
+"Octave
+Plug 'tranvansang/octave.vim'
+
 "Scala plugins
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+
+"GraphQL plugins
+Plug 'jparise/vim-graphql'
 
 "nvim-telescope
 Plug 'nvim-lua/popup.nvim'
@@ -74,6 +80,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 
+
 "fzf plugin
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -96,13 +103,13 @@ if (has("termguicolors"))
  set termguicolors
 endif
 syntax enable
-colorscheme gruvbox 
+colorscheme gruvbox
 
 
 highlight Normal guibg=NONE ctermbg=NONE
 
-let g:go_fmt_command = "goimports" 
-let g:go_fmt_autosave = 1 
+let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
 let g:prettier#autoformat = 0
 let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
 let g:gruvbox_invert_selection='0'
@@ -140,3 +147,24 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinLeave * call clearmatches()
+
+function! s:JbzClangFormat(first, last)
+  let l:winview = winsaveview()
+  execute a:first . "," . a:last . "!clang-format"
+  call winrestview(l:winview)
+endfunction
+command! -range=% JbzClangFormat call <sid>JbzClangFormat (<line1>, <line2>)
+
+" Autoformatting with clang-format
+au FileType c,cpp nnoremap <buffer><leader>lf :<C-u>JbzClangFormat<CR>
+au FileType c,cpp vnoremap <buffer><leader>f :JbzClangFormat<CR>
+
+" Remove all trailing whitespaces
+nnoremap <silent> <leader>rs :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>

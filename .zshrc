@@ -11,13 +11,23 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 # Go config
 export GOPATH=$HOME/go
-export GOROOT="/opt/homebrew/Cellar/go/1.16.3/libexec"
+export GOROOT="/opt/homebrew/Cellar/go/1.16.5/libexec"
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+
+# BLAS
+export LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
+
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 
 # Set name of the theme to load --- if set to "random", it will
@@ -88,7 +98,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-syntax-highlighting 
+    zsh-syntax-highlighting
     zsh-autosuggestions
     golang
 )
@@ -127,3 +137,7 @@ source $ZSH/oh-my-zsh.sh
 alias config='/usr/bin/git --git-dir=/Users/tanmaygairola/.cfg/ --work-tree=/Users/tanmaygairola'
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+source /Users/tanmaygairola/.tmc-autocomplete.sh || true
+source /Users/tanmaygairola/.tmc-autocomplete.sh || true
+#[ -f "/Users/tanmaygairola/.ghcup/env" ] && source "/Users/tanmaygairola/.ghcup/env" # ghcup-env
+[ -f "/Users/tanmaygairola/.ghcup/env" ] && source "/Users/tanmaygairola/.ghcup/env" # ghcup-env
